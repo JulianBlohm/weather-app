@@ -6,6 +6,7 @@ function App() {
     const [weather, setWeather] = useState({})
 
     useEffect(() => loadWeather(), [])
+
     const weatherIconUrl = `http://openweathermap.org/img/wn/${weather.icon}@2x.png`
 
     console.log(weather)
@@ -24,13 +25,28 @@ function App() {
                 {weather.wind > 0 ? (
                     <span>Wind {weather.wind} m/s</span>
                 ) : (
-                    <h2>No wind</h2>
+                    <span>No wind</span>
                 )}
                 <Temperature>{weather.temp}°</Temperature>
-                <span>feels<br/> like</span>
+                <span>
+                    feels
+                    <br /> like
+                </span>
                 <Temperature>{weather.feels_like}°</Temperature>
-                
 
+                <Subheading>7 Day Forecast</Subheading>
+                <Forecast>
+                    {weather.daily &&
+                        weather.daily.map((day, index) => (
+                            <Day key={index}>
+                                <DailyTemp>
+                                    {Math.round(day.temp.day)}°
+                                </DailyTemp>
+
+                                <span>{day.weather[0].description}</span>
+                            </Day>
+                        ))}
+                </Forecast>
             </CurrentWeatherGrid>
         </Showcase>
     )
@@ -58,10 +74,30 @@ const CurrentWeatherGrid = styled.article`
 const Heading = styled.h1`
     padding: 20px 0;
 `
+const Subheading = styled.h2`
+    grid-column: 1 / 3;
+    margin-bottom: 20px;
+`
 
 const Temperature = styled.h2`
     font-size: 6rem;
     margin: 50px 0;
     text-align: right;
+`
+
+const Forecast = styled.ul`
+    list-style: none;
+    text-align: left;
+    grid-column: 1 / -1;
+    width: 80%;
+`
+
+const Day = styled.li`
+    display: grid;
+    grid-template: auto / 20% 80%;
+`
+
+const DailyTemp = styled.span`
+    text-align: center;
 `
 export default App

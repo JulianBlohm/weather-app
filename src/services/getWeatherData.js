@@ -10,6 +10,7 @@ export default function getdata() {
                 wind: data.current.wind_speed,
                 description: data.current.weather[0].description,
                 icon: data.current.weather[0].icon,
+                daily: data.daily
             }
         })
         .catch((error) => console.log(error))
