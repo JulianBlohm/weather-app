@@ -39,11 +39,17 @@ function App() {
                     {weather.daily &&
                         weather.daily.map((day, index) => (
                             <Day key={index}>
+                                <ForecastIcon
+                                    src={`http://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png`}
+                                    alt=""
+                                />
                                 <DailyTemp>
                                     {Math.round(day.temp.day)}°
                                 </DailyTemp>
 
-                                <span>{day.weather[0].description}</span>
+                                <DailyDescription>
+                                    {day.weather[0].description}
+                                </DailyDescription>
                             </Day>
                         ))}
                 </Forecast>
@@ -54,7 +60,6 @@ function App() {
 
 const Showcase = styled.main`
     background: var(--main-blue);
-    height: 100vh;
     color: white;
     text-align: center;
     display: flex;
@@ -94,10 +99,20 @@ const Forecast = styled.ul`
 
 const Day = styled.li`
     display: grid;
-    grid-template: auto / 20% 80%;
+    grid-template: auto / 10% 25% 60%;
 `
 
 const DailyTemp = styled.span`
     text-align: center;
+    vertical-align: center;
+    line-height: 30px;
+`
+
+const DailyDescription = styled.span`
+    line-height: 30px;
+`
+
+const ForecastIcon = styled.img`
+    width: 30px;
 `
 export default App
