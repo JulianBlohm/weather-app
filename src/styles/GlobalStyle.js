@@ -7,9 +7,11 @@ export default createGlobalStyle`
     padding: 0;
   }
 
-  body {
-    font-size: 100%;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  :root {
+    --main-blue: #40798C;
   }
 
+  body {
+    font-size: 100%;
+    font-family: 'Quicksand', sans-serif;  }
 `
