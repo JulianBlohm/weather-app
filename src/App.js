@@ -2,23 +2,25 @@ import { useEffect, useState } from 'react'
 import getWeatherData from './services/getWeatherData'
 
 function App() {
-    const [weatherInformation, setWeatherInformation] = useState({})
+    const [weather, setWeather] = useState({})
 
-    useEffect(() => loadWeatherInformation(), [])
-    const weatherIconUrl = `http://openweathermap.org/img/wn/${weatherInformation.icon}@2x.png`
+    useEffect(() => loadWeather(), [])
+    const weatherIconUrl = `http://openweathermap.org/img/wn/${weather.icon}@2x.png`
 
-    console.log(weatherInformation)
+    console.log(weather)
 
-    async function loadWeatherInformation() {
+    async function loadWeather() {
         const loadedData = await getWeatherData()
-        setWeatherInformation(loadedData)
+        setWeather(loadedData)
     }
 
     return (
-        <div>
-            <h1>Closelink Weather</h1>
-            {weatherInformation.icon && <img src={weatherIconUrl} alt="" />}
-        </div>
+        <main>
+            {weather.icon && <img src={weatherIconUrl} alt="" />}
+            <h1>{weather.temp}°</h1>
+            <h2>{weather.description}</h2>
+            {weather.wind > 0 ? <h2>Wind {weather.wind} m/s</h2> : <h2>No wind</h2>}
+        </main>
     )
 }
 

@@ -5,7 +5,7 @@ export default function getdata() {
         .then((res) => res.json())
         .then((data) => {
             return {
-                temp: data.current.temp,
+                temp: Math.round(data.current.temp),
                 wind: data.current.wind_speed,
                 description: data.current.weather[0].description,
                 icon: data.current.weather[0].icon,
