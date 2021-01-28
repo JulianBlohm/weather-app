@@ -19,14 +19,18 @@ function App() {
         <Showcase>
             <Heading>Weather at Closelink</Heading>
             <CurrentWeatherGrid>
-                {weather.icon && <Icon src={weatherIconUrl} alt="" />}
-                <Temperature>{weather.temp}°</Temperature>
-                <Description>{weather.description}</Description>
+                <span>{weather.description}</span>
+                {weather.icon && <img src={weatherIconUrl} alt="" />}
                 {weather.wind > 0 ? (
-                    <Wind>Wind {weather.wind} m/s</Wind>
+                    <span>Wind {weather.wind} m/s</span>
                 ) : (
                     <h2>No wind</h2>
                 )}
+                <Temperature>{weather.temp}°</Temperature>
+                <span>feels<br/> like</span>
+                <Temperature>{weather.feels_like}°</Temperature>
+                
+
             </CurrentWeatherGrid>
         </Showcase>
     )
@@ -37,36 +41,27 @@ const Showcase = styled.main`
     height: 100vh;
     color: white;
     text-align: center;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 `
 
 const CurrentWeatherGrid = styled.article`
     display: grid;
-    grid-template: auto / 30% 40% 30%;
+    grid-template: auto / 40% 20% 40%;
     place-items: center;
+    max-width: 500px;
 `
 
 const Heading = styled.h1`
     padding: 20px 0;
 `
 
-const Icon = styled.img`
-    grid-column: 2 / 3;
-`
-
 const Temperature = styled.h2`
     font-size: 6rem;
-    grid-column: 1 / -1;
     margin: 50px 0;
+    text-align: right;
 `
-
-const Description = styled.span`
-    grid-column: 1 / 2;
-    grid-row: 1 / 2;
-`
-
-const Wind = styled.span`
-    grid-column: 3 / 4;
-    grid-row: 1 / 2;
-`
-
 export default App

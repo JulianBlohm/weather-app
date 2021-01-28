@@ -6,6 +6,7 @@ export default function getdata() {
         .then((data) => {
             return {
                 temp: Math.round(data.current.temp),
+                feels_like: Math.round(data.current.feels_like),
                 wind: data.current.wind_speed,
                 description: data.current.weather[0].description,
                 icon: data.current.weather[0].icon,
