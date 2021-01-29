@@ -1,27 +1,30 @@
 import { useEffect, useState } from 'react'
 import getWeatherData from './services/getWeatherData'
 import styled from 'styled-components/macro'
+import Forecast from './components/Forecast'
+import WeatherIcon from './components/WeatherIcon'
 
 function App() {
-    const [weather, setWeather] = useState({})
+    const [weather, setWeather] = useState()
 
     useEffect(() => loadWeather(), [])
-
-    const weatherIconUrl = `http://openweathermap.org/img/wn/${weather.icon}@2x.png`
-
-    console.log(weather)
 
     async function loadWeather() {
         const loadedData = await getWeatherData()
         setWeather(loadedData)
     }
 
+    if (!weather) {
+        return 'loading'
+    }
+
+
     return (
         <Showcase>
             <Heading>Weather at Closelink</Heading>
             <CurrentWeatherGrid>
                 <span>{weather.description}</span>
-                {weather.icon && <img src={weatherIconUrl} alt="" />}
+                <WeatherIcon icon={weather.icon}/>
                 {weather.wind > 0 ? (
                     <span>Wind {weather.wind} m/s</span>
                 ) : (
@@ -35,24 +38,7 @@ function App() {
                 <Temperature>{weather.feels_like}°</Temperature>
 
                 <Subheading>7 Day Forecast</Subheading>
-                <Forecast>
-                    {weather.daily &&
-                        weather.daily.map((day, index) => (
-                            <Day key={index}>
-                                <ForecastIcon
-                                    src={`http://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png`}
-                                    alt=""
-                                />
-                                <DailyTemp>
-                                    {Math.round(day.temp.day)}°
-                                </DailyTemp>
-
-                                <DailyDescription>
-                                    {day.weather[0].description}
-                                </DailyDescription>
-                            </Day>
-                        ))}
-                </Forecast>
+                <Forecast weather={weather.daily} />
             </CurrentWeatherGrid>
         </Showcase>
     )
@@ -90,29 +76,4 @@ const Temperature = styled.h2`
     text-align: right;
 `
 
-const Forecast = styled.ul`
-    list-style: none;
-    text-align: left;
-    grid-column: 1 / -1;
-    width: 80%;
-`
-
-const Day = styled.li`
-    display: grid;
-    grid-template: auto / 10% 25% 60%;
-`
-
-const DailyTemp = styled.span`
-    text-align: center;
-    vertical-align: center;
-    line-height: 30px;
-`
-
-const DailyDescription = styled.span`
-    line-height: 30px;
-`
-
-const ForecastIcon = styled.img`
-    width: 30px;
-`
 export default App
